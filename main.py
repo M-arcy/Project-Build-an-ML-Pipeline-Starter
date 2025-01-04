@@ -1,11 +1,13 @@
 import json
-
 import mlflow
 import tempfile
 import os
 import wandb
+
 import hydra
 from omegaconf import DictConfig
+
+root_path = os.getcwd()
 
 _steps = [
     "download",
@@ -16,9 +18,8 @@ _steps = [
     # NOTE: We do not include this in the steps so it is not run by mistake.
     # You first need to promote a model export to "prod" before you can run this,
     # then you need to run this step explicitly
-#    "test_regression_model"
+    # "test_regression_model"
 ]
-
 
 # This automatically reads in the configuration
 @hydra.main(config_name='config')
@@ -27,6 +28,7 @@ def go(config: DictConfig):
     # Setup the wandb experiment. All runs will be grouped under this name
     os.environ["WANDB_PROJECT"] = config["main"]["project_name"]
     os.environ["WANDB_RUN_GROUP"] = config["main"]["experiment_name"]
+    root_path = hydra.utils.get_original_cwd()
 
     # Steps to execute
     steps_par = config['main']['steps']
@@ -51,9 +53,21 @@ def go(config: DictConfig):
             )
 
         if "basic_cleaning" in active_steps:
-            ##################
-            # Implement here #
-            ##################
+    # Get the absolute path to the `src/basic_cleaning` folder
+            #clean_path = os.path.abspath(os.path.join("src", "basic_cleaning"))
+            _ = mlflow.run(
+                os.path.join(root_path, "src", "basic_cleaning"),
+            #clean_path,  # Use the absolute path instead of relative path
+            "main",
+                parameters={
+                    "input_artifact": "sample.csv:v0",
+                    "output_artifact": "clean_sample.csv",
+                    "output_type": "cleaned_sample",
+                    "output_description": "cleaned sample data",
+                    "min_price": config["etl"]["min_price"],
+                    "max_price": config["etl"]["max_price"]
+                },
+            )
             pass
 
         if "data_check" in active_steps:
@@ -70,13 +84,10 @@ def go(config: DictConfig):
 
         if "train_random_forest" in active_steps:
 
-            # NOTE: we need to serialize the random forest configuration into JSON
+            # Serialize the random forest configuration into JSON
             rf_config = os.path.abspath("rf_config.json")
             with open(rf_config, "w+") as fp:
-                json.dump(dict(config["modeling"]["random_forest"].items()), fp)  # DO NOT TOUCH
-
-            # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest
-            # step
+                json.dump(dict(config["modeling"]["random_forest"].items()), fp)
 
             ##################
             # Implement here #
@@ -85,11 +96,9 @@ def go(config: DictConfig):
             pass
 
         if "test_regression_model" in active_steps:
-
             ##################
             # Implement here #
             ##################
-
             pass
 
 
