@@ -1,5 +1,10 @@
 https://github.com/M-arcy/Project-Build-an-ML-Pipeline-Starter
+https://wandb.ai/marcymisner1/nyc_airbnb/artifacts/model_export/random_forest_export/v7/lineage
 
+
+This project builds an end-to-end machine learning pipeline to predict short-term rental prices in NYC using tools like MLflow, Weights & Biases (W&B), and Hydra. The pipeline includes data cleaning, exploratory analysis, model training, hyperparameter tuning, and testing, with results tracked and versioned for reproducibility.
+
+Instructions for the project are listed below:
 
 # Build an ML Pipeline for Short-Term Rental Prices in NYC
 You are working for a property management company renting rooms and properties for short periods of 
@@ -25,7 +30,7 @@ In this project you will build such a pipeline.
 
 This project is compatible with the following operating systems:
 
-- **Ubuntu 22.04** (Jammy Jellyfish) - both Ubuntu installation and WSL (Windows Subsystem for Linux)
+- **Ubuntu 22.04** (Jammy Jellyfish) - both Ubuntu installation and WSL (Windows Subsystem 2 for Linux)
 - **Ubuntu 24.04** - both Ubuntu installation and WSL (Windows Subsystem for Linux)
 - **macOS** - compatible with recent macOS versions
 
