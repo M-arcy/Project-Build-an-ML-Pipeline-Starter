@@ -1,6 +1,5 @@
 https://github.com/M-arcy/Project-Build-an-ML-Pipeline-Starter
-https://wandb.ai/marcymisner1/nyc_airbnb/artifacts/model_export/random_forest_export/v7/lineage
-
+https://wandb.ai/marcymisner1/nyc_airbnb/overview
 
 This project builds an end-to-end machine learning pipeline to predict short-term rental prices in NYC using tools like MLflow, Weights & Biases (W&B), and Hydra. The pipeline includes data cleaning, exploratory analysis, model training, hyperparameter tuning, and testing, with results tracked and versioned for reproducibility.
 
